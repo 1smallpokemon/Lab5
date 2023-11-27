@@ -18,11 +18,6 @@ def main():
     try:
         data, item_stats, user_stats = preprocess(sys.argv[1])
         
-        if argc > 2:
-            n = int(sys.argv[2])
-        else:
-            n = None
-        
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
