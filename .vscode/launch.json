@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "weighted nn cosine",
+            "type": "python",
+            "request": "launch",
+            "program": "/Users/kavyak/Documents/CSC_466/Lab5/WeightedNNNCosine/weighted_nnn_cosine.py",
+            "console": "integratedTerminal",
+            "args": ["jester-data-1.csv"]
+        },
+        {
+            "name": "main",
+            "type": "python",
+            "request": "launch",
+            "program": "/Users/kavyak/Documents/CSC_466/Lab5/main.py",
+            "console": "integratedTerminal",
+            "args": ["data/jester-data-1.csv", "5"]
+        }
+    ]
+}
