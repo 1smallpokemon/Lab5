@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import sys
 from Utilities.preprocessing import preprocess
-from AvgNNNPearson.avg_nnn_pearson import  *
+from AvgNNNPearson.avg_nnn_pearson import *
 from MeanUtilityCosine.mean_utility_cosine import *
 from WeightedNNNCosine.weighted_nnn_cosine import *
 from WeightedSumPearson.weighted_sum_pearson import *
@@ -38,7 +38,8 @@ if __name__ == "__main__":
     test_cases_filename = sys.argv[2]
     
     # Preprocess data
-    data, item_stats, user_stats = preprocess('path_to_jester_data.csv')
+    data, item_stats, user_stats = preprocess('data/jester-data-1.csv')
     
     # Run evaluation
     evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats)
+
