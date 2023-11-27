@@ -13,21 +13,18 @@ def main():
     argc = len(sys.argv)
     
     if argc < 3 or argc > 3:
-        print("Usage: python hclustering.py <Filename> <n>")
+        print("Usage: python weighted_nnn_cosine.py <Filename> <n>")
     
     try:
         data, item_stats, user_stats = preprocess(sys.argv[1])
         
-        if argc > 2:
-            n = int(sys.argv[2])
-        else:
-            n = None
+        n = int(sys.argv[2])
         
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
 
-    weighted_sum(data, item_stats, user_stats, 10, 10, 5)
+    weighted_sum(data, item_stats, user_stats, 10, 10, n)
 
 def weighted_sum(data, item_stats, user_stats, user_id, item_id, n):
     """

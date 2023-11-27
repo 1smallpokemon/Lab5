@@ -25,7 +25,7 @@
             "request": "launch",
             "program": "/Users/kavyak/Documents/CSC_466/Lab5/main.py",
             "console": "integratedTerminal",
-            "args": ["data/jester-data-1.csv", "5"]
+            "args": ["data/jester-data-1.csv"]
         }
     ]
 }
