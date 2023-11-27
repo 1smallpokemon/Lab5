@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from Utilities.preprocessing import preprocess
 from AvgNNNPearson.avg_nnn_pearson import *
-from MeanUtilityCosine.mean_utility_cosine import *
+from MeanUtility.mean_utility import *
 from WeightedNNNCosine.weighted_nnn_cosine import *
 from WeightedSumPearson.weighted_sum_pearson import *
 
@@ -16,7 +16,7 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         user_id, item_id = row
         if method == 'mean_utility':
             prediction = mean_utility(user_id, item_id, data, item_stats)
-        elif method == 'weighted_sum':
+        elif method == 'nnn_weighted_sum_cosine':
             prediction = weighted_sum(user_id, item_id, data, item_stats, user_stats)
         # Add other methods here
         else:
@@ -34,6 +34,8 @@ if __name__ == "__main__":
         print("Usage: python EvaluateCFList.py <Method> <TestCasesFilename>")
         sys.exit(1)
     
+    methods = ['mean_utility_cosine',
+               ]
     method = sys.argv[1]
     test_cases_filename = sys.argv[2]
     
