@@ -44,12 +44,16 @@ def find_n_nearest_neighbors(user_id, data, n_neighbors):
     top_neighbors = sorted_neighbors[:n_neighbors]
     return top_neighbors
 
-def nnn_avg_pearson(user_id, item_id, data, n_neighbors):
+def nnn_weighted_sum_pearson(user_id, item_id, data, n_neighbors):
     """
     Predict the rating using the N nearest neighbors.
     """
     neighbors = find_n_nearest_neighbors(user_id, data, n_neighbors)
+    # Normalize the correlation coefficients
+    sum_abs_correlations = sum(abs(neighbor[1]) for neighbor in neighbors)
+    k = 1 / sum_abs_correlations if sum_abs_correlations != 0 else 0
+    
     # Calculate the weighted sum of neighbors' ratings
-    weighted_sum = (1/n_neighbors) * sum(data.at[neighbor[0], item_id] for neighbor in neighbors)
+    weighted_sum = sum(neighbor[1] * data.at[neighbor[0], item_id] for neighbor in neighbors)
+    prediction = k * weighted_sum
     return prediction
-

@@ -27,9 +27,9 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         elif method == 'nnn_weighted_sum_cosine':
             prediction = weighted_sum(user_id, item_id, data, item_stats, user_stats)
         elif method == 'nnn_avg_pearson':
-            prediction = predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors = 10)
+            prediction = nnn_avg_pearson(user_id, item_id, data, n_neighbors = 10)
         elif method == 'nnn_weighted_sum_pearson':
-            apple = 'orange' 
+            prediction = nnn_weighted_sum_pearson(user_id, item_id, data, n_neighbors = 10)
         else:
             raise ValueError("Unknown method")
         
@@ -45,7 +45,6 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
     
 
 if __name__ == "__main__":
-    # Basic command line interface
     methods = ['mean_utility',
                 'nnn_weighted_sum_cosine',
                 'nnn_avg_pearson',
@@ -53,7 +52,7 @@ if __name__ == "__main__":
     
     if len(sys.argv) != 3:
         print("Usage: python EvaluateCFList.py <Method> <TestCasesFilename>")
-        print(methods)
+        print(*methods, sep ='\n')
         sys.exit(1)
     
     method = methods[sys.argv[1]]
