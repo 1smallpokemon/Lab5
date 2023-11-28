@@ -37,6 +37,7 @@ def find_n_nearest_neighbors(user_id, data, n_neighbors):
             correlation = pearson_correlation(user_vector, other_user_vector)
             if not np.isnan(correlation):
                 correlations[other_user_id] = correlation
+        
     
     # Sort users by correlation and select the top N neighbors
     sorted_neighbors = sorted(correlations.items(), key=lambda item: item[1], reverse=True)
@@ -57,7 +58,3 @@ def predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors):
     prediction = k * weighted_sum
     return prediction
 
-if __name__ == "__main__":
-    # Preprocess data
-    data, item_stats, user_stats = preprocess('data/jester-data-1.csv')
-    prediction = predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors = 10)
