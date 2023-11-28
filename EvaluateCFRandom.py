@@ -1,9 +1,11 @@
-# EvaluateCFRandom.py
-import sys
+import pandas as pd
 import numpy as np
-from preprocessing import preprocess
-from collaborative_filtering_techniques import mean_utility, weighted_sum, adjusted_weighted_sum, nearest_neighbors
-# You would import your actual collaborative filtering functions here
+import sys
+from Utilities.preprocessing import preprocess
+from AvgNNNPearson.avg_nnn_pearson import *
+from MeanUtility.mean_utility import *
+from WeightedNNNCosine.weighted_nnn_cosine import *
+from WeightedSumPearson.weighted_sum_pearson import *
 
 def evaluate_cf_random(method, size, repeats, data, item_stats, user_stats):
     # Randomly sample test cases and evaluate the specified method
