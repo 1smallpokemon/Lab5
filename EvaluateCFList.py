@@ -6,6 +6,7 @@ from AvgNNNPearson.avg_nnn_pearson import *
 from MeanUtility.mean_utility import *
 from WeightedNNNCosine.weighted_nnn_cosine import *
 from WeightedSumPearson.weighted_sum_pearson import *
+from Utilities.mean_absolute_error import mean_absolute_error
 
 def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
     # Load test cases
@@ -26,6 +27,11 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         predictions.append((user_id, item_id, actual_rating, prediction))
     
     # Compute MAE and other statistics here
+    # output format: userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating
+    print("userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating")
+    for row in predictions:
+        print(str(row[0]), "," + str(row[1]), "," + str(row[2]), ",", str(row[3]), ",", str(row[2] - row[3]))
+    print(mean_absolute_error(predictions))
     # ...
 
 if __name__ == "__main__":
