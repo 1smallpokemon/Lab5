@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import sys
 
-from Utilities.preprocessing import preprocess
+from Utilities.preprocessing import preprocess, compute_item_stats
 from WeightedNNNCosine.weighted_nnn_cosine import n_nearest_neighbors
 
 def main():
@@ -29,8 +29,8 @@ def mean_utility(data, item_stats, user_stats, user_id, item_id):
     given a user and item, use mean utility to predict the utility u(c,s) using the ratings matrix (data)
     mean utility = average utility across all users for the given item
     """
-    return item_stats.loc[item_id, "mean_rating"]
-
+    new_item_stats = compute_item_stats(data)
+    return new_item_stats.loc[item_id, "mean_rating"]
 
 if __name__ == "__main__":
     main()
