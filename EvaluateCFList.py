@@ -18,7 +18,7 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         
         replace = False
         if not data.iloc[user_id, item_id] is np.nan:
-            old_value = data.iloc[user_id, item_id]
+            old_value = data.at[user_id, item_id]
             data.iloc[user_id, item_id] = np.nan
             replace = True
         
