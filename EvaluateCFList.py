@@ -14,17 +14,31 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
     predictions = []
     
     for _, row in test_cases.iterrows():
+        
         user_id, item_id = row
+        
+        replace = False
+        if not data.iloc[user_id, item_id] is np.nan:
+            old_value = data.iloc[user_id, item_id]
+            data.iloc[user_id, item_id] = np.nan
+            replace = True
+        
         if method == 'mean_utility':
-            prediction = mean_utility(user_id, item_id, data, item_stats)
+            prediction = mean_utility(data, item_stats, user_stats, user_id, item_id)
         elif method == 'nnn_weighted_sum_cosine':
             prediction = weighted_sum(user_id, item_id, data, item_stats, user_stats)
-        # Add other methods here
+        elif method == 'nnn_avg_pearson':
+            prediction = predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors = 10)
+        elif method == 'nnn_weighted_sum_pearson':
+            apple = 'orange' 
         else:
             raise ValueError("Unknown method")
         
         actual_rating = data.at[user_id, item_id]
         predictions.append((user_id, item_id, actual_rating, prediction))
+        
+        if replace:
+            data.iloc[user_id, item_id] = old_value
     
     # Compute MAE and other statistics here
     # output format: userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating
@@ -33,16 +47,22 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         print(str(row[0]), "," + str(row[1]), "," + str(row[2]), ",", str(row[3]), ",", str(row[2] - row[3]))
     print(mean_absolute_error(predictions))
     # ...
+    
+    
 
 if __name__ == "__main__":
     # Basic command line interface
+    methods = ['mean_utility',
+                'nnn_weighted_sum_cosine',
+                'nnn_avg_pearson',
+                'nnn_weighted_sum_pearson']
+    
     if len(sys.argv) != 3:
         print("Usage: python EvaluateCFList.py <Method> <TestCasesFilename>")
+        print(methods)
         sys.exit(1)
     
-    methods = ['mean_utility_cosine',
-               ]
-    method = sys.argv[1]
+    method = methods[sys.argv[1]]
     test_cases_filename = sys.argv[2]
     
     # Preprocess data

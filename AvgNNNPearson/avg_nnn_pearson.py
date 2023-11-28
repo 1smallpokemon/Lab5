@@ -57,3 +57,7 @@ def predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors):
     prediction = k * weighted_sum
     return prediction
 
+if __name__ == "__main__":
+    # Preprocess data
+    data, item_stats, user_stats = preprocess('data/jester-data-1.csv')
+    prediction = predict_rating_n_nearest_neighbors(user_id, item_id, data, n_neighbors = 10)
