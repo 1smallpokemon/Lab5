@@ -23,7 +23,10 @@ def evaluate_cf_random(method, size, repeats, data, item_stats, user_stats):
             replace = False
             if not data.iloc[user_id, item_id] is np.nan:
                 old_value = data.iloc[user_id, item_id]
-                data.iloc[user_id, item_id] = np.nan
+                sparse_type = data.dtypes[item_id]
+                data[item_id] = data[item_id].sparse.to_dense()
+                data.loc[user_id, item_id] = np.nan
+                data[item_id] = data[item_id].astype(sparse_type)
                 replace = True
             
             if method == 'mean_utility':
@@ -37,11 +40,14 @@ def evaluate_cf_random(method, size, repeats, data, item_stats, user_stats):
             else:
                 raise ValueError("Unknown method")
             
+            if replace:
+                sparse_type = data.dtypes[item_id]
+                data[item_id] = data[item_id].sparse.to_dense()
+                data.loc[user_id, item_id] = old_value
+                data[item_id] = data[item_id].astype(sparse_type)
+            
             actual_rating = data.at[user_id, item_id]
             predictions.append((user_id, item_id, actual_rating, prediction))
-            
-            if replace:
-                data.iloc[user_id, item_id] = old_value
 
         # Compute MAE and other statistics here
         # output format: userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating
