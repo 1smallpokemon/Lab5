@@ -3,12 +3,15 @@ import numpy as np
 
 def mean_absolute_error(predictions):
     """
-    given predictions = array of tuples (user_id, item_id, actual_rating, prediction)
+    Calculate the Mean Absolute Error (MAE) given predictions: 
+    a list of tuples (user_id, item_id, actual_rating, prediction).
     """
-    w = len(predictions)
-    sigma = 0
-    for pairing in predictions:
-        prediction = pairing[3]
-        actual_rating = pairing[2]
-        sigma += abs(prediction - actual_rating)
-    return sigma / w
+    # Filter out the predictions that are NaN
+    valid_predictions = [p for p in predictions if not np.isnan(p[3])]
+    
+    # Calculate the sum of absolute errors for non-NaN predictions
+    error_sum = sum(abs(p[2] - p[3]) for p in valid_predictions)
+    
+    # Calculate the mean absolute error
+    mae = error_sum / len(valid_predictions) if valid_predictions else np.nan
+    return mae

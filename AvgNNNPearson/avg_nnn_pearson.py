@@ -50,6 +50,6 @@ def nnn_avg_pearson(user_id, item_id, data, n_neighbors):
     """
     neighbors = find_n_nearest_neighbors(user_id, data, n_neighbors)
     # Calculate the weighted sum of neighbors' ratings
-    weighted_sum = (1/n_neighbors) * sum(data.at[neighbor[0], item_id] for neighbor in neighbors)
+    prediction  = (1/n_neighbors) * sum(data.at[neighbor[0], item_id] for neighbor in neighbors)
     return prediction
 
