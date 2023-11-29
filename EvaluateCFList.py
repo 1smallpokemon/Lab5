@@ -62,7 +62,7 @@ if __name__ == "__main__":
         print(methods)
         sys.exit(1)
     
-    method = methods[sys.argv[1]]
+    method = methods[int(sys.argv[1])]
     test_cases_filename = sys.argv[2]
     
     # Preprocess data
