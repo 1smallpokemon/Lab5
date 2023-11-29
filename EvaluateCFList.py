@@ -5,7 +5,7 @@ from Utilities.preprocessing import preprocess
 from AvgNNNPearson.avg_nnn_pearson import *
 from MeanUtility.mean_utility import *
 from WeightedNNNCosine.weighted_nnn_cosine import *
-from WeightedSumPearson.weighted_sum_pearson import *
+from WeightedSumPearson.weighted_nnn_pearson import *
 from Utilities.mean_absolute_error import mean_absolute_error
 
 def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
@@ -47,13 +47,38 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
         predictions.append((user_id, item_id, actual_rating, prediction))
     
     
-    # Compute MAE and other statistics here
-    # output format: userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating
-    print("userID, itemID, Actual_Rating, Predicted_Rating, Delta_Rating")
+    tp, fp, tn, fn = calculate_confusion_matrix(predictions)
+    precision, recall, f1 = calculate_precision_recall_f1(tp, fp, tn, fn)
+    
+    print("userID,itemID,Actual_Rating,Predicted_Rating,Delta_Rating")
     for row in predictions:
-        print(str(row[0]), "," + str(row[1]), "," + str(row[2]), ",", str(row[3]), ",", str(row[2] - row[3]))
-    print(mean_absolute_error(predictions))
+        print(f"{row[0]},{row[1]},{row[2]},{row[3]},{row[2] - row[3]}")
+    
+    mae = mean_absolute_error(predictions)
+    print(f"MAE: {mae}")
+    print(f"Confusion Matrix: TP={tp}, FP={fp}, TN={tn}, FN={fn}")
+    print(f"Precision: {precision}, Recall: {recall}, F1: {f1}")
     # ...
+
+# Function to calculate the confusion matrix and related statistics
+def calculate_confusion_matrix(predictions):
+    tp = fp = tn = fn = 0
+    for _, _, actual, predicted in predictions:
+        if actual >= 5 and predicted >= 5:
+            tp += 1
+        elif actual < 5 and predicted >= 5:
+            fp += 1
+        elif actual >= 5 and predicted < 5:
+            fn += 1
+        elif actual < 5 and predicted < 5:
+            tn += 1
+    return tp, fp, tn, fn
+
+def calculate_precision_recall_f1(tp, fp, tn, fn):
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0
+    return precision, recall, f1
     
 if __name__ == "__main__":
     methods = ['mean_utility',
