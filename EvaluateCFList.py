@@ -25,11 +25,11 @@ def evaluate_cf_list(method, test_cases_filename, data, item_stats, user_stats):
             data.loc[user_id, item_id] = np.nan
             data[item_id] = data[item_id].astype(sparse_type)
             replace = True
-        
+        #def weighted_sum(data, item_stats, user_stats, user_id, item_id, n):
         if method == 'mean_utility':
             prediction = mean_utility(data, item_stats, user_stats, user_id, item_id)
         elif method == 'nnn_weighted_sum_cosine':
-            prediction = weighted_sum(user_id, item_id, data, item_stats, user_stats)
+            prediction = weighted_sum(data, item_stats, user_stats, user_id, item_id, n=10)
         elif method == 'nnn_avg_pearson':
             prediction = nnn_avg_pearson(user_id, item_id, data, n_neighbors = 10)
         elif method == 'nnn_weighted_sum_pearson':

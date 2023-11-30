@@ -32,7 +32,7 @@ def evaluate_cf_random(method, size, repeats, data, item_stats, user_stats):
             if method == 'mean_utility':
                 prediction = mean_utility(data, item_stats, user_stats, user_id, item_id)
             elif method == 'nnn_weighted_sum_cosine':
-                prediction = weighted_sum(user_id, item_id, data, item_stats, user_stats)
+                prediction = weighted_sum(data, item_stats, user_stats, user_id, item_id, n=10)
             elif method == 'nnn_avg_pearson':
                 prediction = nnn_avg_pearson(user_id, item_id, data, n_neighbors = 10)
             elif method == 'nnn_weighted_sum_pearson':
