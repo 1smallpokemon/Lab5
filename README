@@ -1,0 +1,30 @@
+Team Members:
+##############
+Joe Dewar - jdewar@calpoly.edu
+Kavya Karunakaran - kkarunak@calpoly.edu
+
+Methods:
+########
+Average N-Nearest Neighbors Ranking with Pearson Similarity
+Weighted N-Nearest Neighbors Sum with Pearson Similarity
+Weighted N-Nearest Neighbors Sum with Cosine Similarity
+Mean Utility
+
+Directory Structure
+###################
+AvgNNNPearson/: Contains the Average N-Nearest Neighbors with Pearson Similarity implementation.
+WeightedNNNPearson/: Contains the Weighted N-Nearest Neighbors with Pearson Similarity implementation.
+WeightedNNNCosine/: Contains the Weighted N-Nearest Neighbors with Cosine Similarity implementation.
+MeanUtility/: Contains the Mean Utility method implementation.
+Utilities/: Contains utility functions such as mean absolute error calculation and data preprocessing.
+
+Running the Evaluation Scripts
+##############################
+EvaluateCFRandom.py: Evaluates the collaborative filtering techniques using a random sampling of user-item pairs.
+Usage: python EvaluateCFRandom.py <MethodIndex> <Size> <Repeats>
+
+EvaluateCFList.py: Evaluates the collaborative filtering techniques using a specified list of user-item pairs.
+Usage: python EvaluateCFList.py <MethodIndex> <TestCasesFilename>
+Where <MethodIndex> is the index of the method to evaluate (0-3), <Size> is the number of test cases to generate, and <Repeats> is the number of times the test is to be repeated.
+
+The data/ directory contains the Jester dataset used for the evaluations.
